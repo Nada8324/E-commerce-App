@@ -1,0 +1,9 @@
+const LOGIN='login';
+const Register='register';
+const Categories='categories';
+const Home='home';
+const Products='products';
+const FAVORITE='favorites';
+const CARTS='carts';
+const Updatecart='carts/3';
+const Profile='profile';
