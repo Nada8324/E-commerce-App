@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
-import '../../models/HomeModel.dart';
-import '../../models/cart_item_model.dart';
-import '../../models/favourite_model.dart';
 import '../network/end_points.dart';
 import '../network/remote/diohelper.dart';
 import '../styles/icon_broken.dart';
@@ -78,28 +76,27 @@ void printfulltext(String text){
   pattern.allMatches(text).forEach((match) { print(match.group(0));});
 }
 String? token;
-FavoriteModel ?favoriteModel;
-CartModel? cartModel;
-void changefavourite(int id){
-  DioHelper.postData(url: FAVORITE, data: {
-    'product_id':id
-  },
-      token: token
-  ).then((value) {
-    favoriteModel=FavoriteModel.Fromjson(value.data);
-    print(favoriteModel?.message);
-  });
+List<ProductsModel>ListOfFavorite=[];
+
+Future<void> getFavoriteProducts(String userId) async {
+
+  try {
+    CollectionReference<Map<String, dynamic>> favoriteProductsCollection =
+    FirebaseFirestore.instance.collection('products').doc(userId).collection('favorites');
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await favoriteProductsCollection.get();
+
+    querySnapshot.docs.forEach((doc) {
+      ProductsModel product = ProductsModel.fromjson(doc.data());
+
+      ListOfFavorite.add(product);
+    });
+  } catch (e) {
+    // Handle any errors
+    print('Error retrieving favorite products: $e');
+  }
 }
-void changecart(int id){
-  DioHelper.postData(url: CARTS, data: {
-    'product_id':id
-  },
-      token: token
-  ).then((value) {
-    cartModel=CartModel.fromJson(value.data);
-    print(cartModel?.message);
-  });
-}
+
 const IconData check_circle_rounded = IconData(0xf635, fontFamily: 'MaterialIcons');
 class ProductsModel{
   late int id;
@@ -112,6 +109,34 @@ class ProductsModel{
   List<dynamic>?images;
   bool? in_favorites=false;
   bool? in_cart;
+  ProductsModel({
+    required this.id,
+    this.price,
+    this.old_price,
+    this.discount,
+    this.image,
+    this.name,
+    this.description ,
+    this.images ,
+    this.in_favorites ,
+    this.in_cart,
+  });
+  Map<String,dynamic> toMap()
+  {
+    return{
+      'name':name,
+      'in_cart':in_cart,
+      'in_favorites':in_favorites,
+      'id':id,
+      'image':image,
+      'description':description,
+      'image':image,
+      'discount':discount,
+      'discount':discount,
+      'old_price':old_price,
+      'price':price
+    };
+  }
   ProductsModel.fromjson(Map<String,dynamic>json){
     id=json['id'];
     price=json['price'];

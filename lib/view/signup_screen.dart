@@ -1,7 +1,5 @@
-import 'package:connectx_task_shopapp/controllers/Signup/cubit.dart';
-import 'package:connectx_task_shopapp/controllers/Signup/states.dart';
-import 'package:connectx_task_shopapp/view/profile_screen.dart';
-import 'package:connectx_task_shopapp/view/signup1_screen.dart';
+import 'package:connectx_task_shopapp/controllers/Signup/signup1_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +12,7 @@ import 'package:iconsax/iconsax.dart';
 
 
 import '../shared/component/component.dart';
-import 'login_screen.dart';
+import '../controllers/LoginScreen/login_screen.dart';
 
 class SignupScreen extends StatelessWidget {
    SignupScreen({super.key});
@@ -44,7 +42,7 @@ class SignupScreen extends StatelessWidget {
                 SizedBox(
                   height: 28.h,
                 ),
-                Image(image: AssetImage("assets/images/illustration 1.png"),
+                Image(image: AssetImage("assets/images/onboarding1.png"),
                   height:361.h ,
                   width: 468.w,),
                 SizedBox(

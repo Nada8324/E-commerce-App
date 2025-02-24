@@ -32,7 +32,9 @@ class CacheHelper
       return await sharedPreferences?.setDouble(key, value);
 
    }
-
+   static Future<bool> deleteToken({ required String key}) async {
+     return await sharedPreferences?.remove(key) ?? false;
+   }
 
 
  }
