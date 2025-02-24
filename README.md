@@ -1,6 +1,8 @@
-# connectx_task_shopapp
+E-commerce App
 
-A new Flutter project.
+This repository contains the source code for an e-commerce mobile application built with Flutter. The app integrates RESTful APIs (validated via Postman), leverages the BLoC pattern for efficient state management, and uses Firebase for authentication, data storage, and backend services.
+
+Feel free to adjust any details to better match your project specifics!
 
 ## Getting Started
 
